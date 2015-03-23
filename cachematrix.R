@@ -13,9 +13,6 @@
 ## z$set(matrix(c(2,-1,0,-1,2,-1,0,-1,2),nrow=3,ncol=3))  ## load a 3x3 known to have an inverse
 ## z2 <- z$get()  ## set 'z2' to the original matrix 
 ## z2  ## show the created matrix!
-## z$setInverse(z2) ## set the inverse over the original matrix
-## z3 <- z$getInverse() ## retrieve the generated inverse
-## z3 ## show the inverse!
 ## ----end console-------continue below
 
 makeCacheMatrix <- function(invertibleMtx = matrix()) {
@@ -27,7 +24,7 @@ makeCacheMatrix <- function(invertibleMtx = matrix()) {
     cachedInverse <<- NULL  ## initialize the outer stored matrix inverse 
   }
   get <- function() invertibleMtx
-  setInverse <- function(toInvert) cachedInverse <<- solve(toInvert)
+  setInverse <- function(toInvert) cachedInverse <<- toInvert
 #  setInverse <- function() cachedInverse <<- solve(invertibleMtx)
   getInverse <- function() cachedInverse
   list(set=set, get=get, setInverse=setInverse, getInverse=getInverse)
@@ -40,9 +37,14 @@ makeCacheMatrix <- function(invertibleMtx = matrix()) {
 ## per instructions, we assume the matrix is 
 ## square, with a non-zero determinant (invertible)
 ## ----continuing above flow:
+## zInv <-  cacheSolve(z)
+## z$setInverse(zInv) ## set the inverse over the original matrix
+## z3 <- z$getInverse() ## retrieve the generated inverse
+## stopifnot(z3 == zInv) 
+## z3                   ## show the inverse!
 ## after the inverse had been set, a call over z should give a message "returning cached inverse"
 ## ----console:
-##  cacheSolve(z)
+## zInv <-  cacheSolve(z)   ## again
 ## 'returning cached inverse'
 ##       [,1] [,2] [,3]
 ##  [1,] 0.75  0.5 0.25
